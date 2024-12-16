@@ -32,9 +32,12 @@ const FileUploadForm = () => {
     //     headers: { 'Content-Type': 'multipart/form-data' },
     //   });
     // frontend/src/components/FileUploadForm.js
-    const response = await axios.post('http://localhost:5000/api/upload-paper', formData, {
+    const response = await axios.post('https://lastonebackend.onrender.com/api/upload-paper', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+    // const response = await axios.post('http://localhost:5000/api/upload-paper', formData, {
+    //     headers: { 'Content-Type': 'multipart/form-data' },
+    //   });
       
   
       console.log('Paper uploaded:', response.data);
