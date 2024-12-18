@@ -1,6 +1,6 @@
 import React, { useState } from 'react';  
 import axios from 'axios';  
-import '../style.css'; // This should contain the new styles  
+import '../style.css'; // Make sure this includes the necessary styles  
 
 const FileUploadForm = () => {  
   const [file, setFile] = useState(null);  
@@ -41,14 +41,29 @@ const FileUploadForm = () => {
       });  
 
       console.log('Paper uploaded:', response.data);  
+      // Show success popup and reset form fields  
       setShowPopup(true);  
-      setTimeout(() => setShowPopup(false), 3000);  
+      setTimeout(() => {  
+        setShowPopup(false);  
+        resetForm(); // Reset the form after showing the popup  
+      }, 3000);  
     } catch (error) {  
       console.error('Error uploading paper:', error);  
       setErrorMessage('Failed to upload paper.');  
     } finally {  
       setLoading(false);  
     }  
+  };  
+
+  // Function to reset the form  
+  const resetForm = () => {  
+    setFile(null);  
+    setExamName('');  
+    setSubjectName('');  
+    setCourseCode('');  
+    setSlotNumber('');  
+    setProgrammeBranch('');  
+    setYear('');  
   };  
 
   return (  
