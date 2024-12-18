@@ -2,11 +2,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../style.css';
+
 const FileUploadForm = () => {
   const [file, setFile] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [title, setTitle] = useState('');
-  const [type, setType] = useState('');
+ 
 
   const handleFileChange = (e) => setFile(e.target.files[0]);
   const handleCoverChange = (e) => setCoverImage(e.target.files[0]);
@@ -14,7 +15,7 @@ const FileUploadForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!file || !coverImage || !title || !type) {
+    if (!file || !coverImage || !title) {
       alert('All fields are required.');
       return;
     }
@@ -24,24 +25,13 @@ const FileUploadForm = () => {
     formData.append('file', file);
     formData.append('coverImage', coverImage);
     formData.append('title', title);
-    formData.append('type', type);
+    formData.append('type', 'pdf'); // Always set type to 'pdf'
 
     try {
-      // Send data to the backend
-    //   const response = await axios.post('http://localhost:5000/api/upload-paper', formData, {
-    //     headers: { 'Content-Type': 'multipart/form-data' },
-    //   });
-    // frontend/src/components/FileUploadForm.js
-    const response = await axios.post('https://lastonebackend.onrender.com/api/upload-paper', formData, {
+      const response = await axios.post('https://lastonebackend.onrender.com/api/upload-paper', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-    // const response = await axios.post('http://localhost:5000/api/upload-paper', formData, {
-    //     headers: { 'Content-Type': 'multipart/form-data' },
-    //   });
-      
-  
 
-    
       console.log('Paper uploaded:', response.data);
       alert('Paper uploaded successfully!');
     } catch (error) {
@@ -57,13 +47,6 @@ const FileUploadForm = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
-        required
-      />
-      <input
-        type="text"
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-        placeholder="Type"
         required
       />
       <input type="file" onChange={handleFileChange} required />
